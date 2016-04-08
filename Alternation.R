@@ -474,8 +474,7 @@ SimulatedFemales<- rename(SimulatedFemales, Interval = FemCumulative)
 SimulatedFemales<- select(SimulatedFemales, SimID, Sex, FemaleVisitRate, Interval)
 
 SimulatedData<- bind_rows(list(SimulatedMales, SimulatedFemales))
-SimulatedData$MaleVisitRate<- ifelse(is.na(SimulatedData$MaleVisitRate), 0, SimulatedData$MaleVisitRate)
-SimulatedData$FemaleVisitRate<- ifelse(is.na(SimulatedData$FemaleVisitRate), 0, SimulatedData$FemaleVisitRate)
+SimulatedData[is.na(SimulatedData)] <- 0
 SimulatedData<- mutate(SimulatedData, VisitDifference=abs(MaleVisitRate-FemaleVisitRate))
 
 M3F3<-SimulatedData%>%
